@@ -1,21 +1,24 @@
-# import matplotlib; matplotlib.use("TkAgg")  # for rendering
 import scipy.integrate as spi
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
+import matplotlib
+matplotlib.use('Agg')
+from datetime import datetime
+from django.conf import settings
+
+
 
 class Animation():
-    # DEFAULT DATA
 
-    a = [[-1, 2, -2, 0, 0, 0],
-         [2, 4, -1, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0]]
+    a = [[0, 0, 0],
+         [0, 0, 0],
+         [0, 0, 0]]
 
-    init_state = [10, 0]
-    visible = (0, 1)
-    t_span = (0, 8)
+    init_state = [10, 0, 2] # for all functions
+    visible = (0 ,1) # choose two functions
+    t_span = (0, 6)
+
 
 
     # INTEGRATION
@@ -23,9 +26,8 @@ class Animation():
     def system(self, t, state):
         derivatives = np.zeros_like(state)
         for i in range(len(derivatives)):
-            derivatives[i] += self.a[i][0]
-            for j in range(0, len(derivatives)):
-                derivatives[i] += self.a[i][j+1]*state[j]
+            for j in range(len(derivatives)):
+                derivatives[i] += self.a[i][j]*state[j]
         return derivatives
 
     def integrate(self):
@@ -34,13 +36,11 @@ class Animation():
 
 
 
-
-
     # CARTESIAN ANIMATION
 
     def animateCartesian(self, result):
 
-        timeFig = plt.figure(1)
+        timeFig = plt.figure()
         timeAx = plt.axes()
 
         timeIms = []
@@ -55,19 +55,31 @@ class Animation():
         return timeAni
 
 
+
+    # PHASE ANIMATION
+
     # phaseFig = plt.figure(2)
     # phaseAx = plt.axes()
     #
     #
     # phaseAx.plot(result.y[visible[0]], result.y[visible[1]])
 
+    def set_a(self, a):
+        self.a = a
 
-
-    def createCartesianAnimation(self, data):
-        self.a = data
-        print(data)
+    def createAnimations(self):
         result = self.integrate()
-        animation = self.animateCartesian(result)
-        animation.save("static/cartesianAnimation.mp4")
-        # HTMLanimation = animation.to_html5_video()
 
+        # cartesian
+        animation = self.animateCartesian(result)
+
+        timestamp = datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+        filename = f"cartesianAnimation_{timestamp}.mp4"
+        fullname = f"{settings.MEDIA_ROOT}/{filename}"
+
+        animation.save(fullname)
+
+        # phase
+        filenames = filename,
+
+        return filenames
