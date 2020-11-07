@@ -1,0 +1,67 @@
+/* GENERICS */
+
+
+
+section {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+/* SYSTEM */
+#system {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+}
+
+#system *{
+    margin: 5px;
+}
+
+/* DATA */
+#data {
+
+}
+
+#data caption, th{
+    text-align: left;
+}
+
+#parameters input {
+    width: 80px;
+}
+
+.param_c {
+    padding-right: 10px;
+}
+
+#submit-visualise-container {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100px;
+}
+
+#submit-visualise {
+}
+
+
+/* ANIMATIONS */
+#animations {
+
+}
+
+.video-container {
+    float: left;
+    width: 50%;
+    min-width: 500px;
+}
+
+video {
+    width: 100%;
+    min-width: inherit;
+}
+
+

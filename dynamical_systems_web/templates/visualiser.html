@@ -1,32 +1,121 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Dynamical Systems</title>
     <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-  </head>
-  <body>
-    <h1>Data</h1>
+</head>
+<body>
 
-    <div style="float: left">
-      <form method="post">
+<h1>Dynamical Systems</h1>
+<section>
+    <div id="system">
+    <form method="post">
         {% csrf_token %}
-        <table>
-        {{ form_a.as_table }}
+        {{ form_system }}
+        <input type="submit" value="Choose">
+    </form>
+    </div>
+</section>
+
+{# Forms #}
+<section>
+<div id="data">
+    <form method="post">
+        {% csrf_token %}
+        <table id="parameters">
+            <caption><h3>Parameters</h3></caption>
+            <tr>
+                <th colspan="1"></th>
+                <th colspan="1" class="param_c">Constant</th>
+                <th colspan="5">Linear</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>from f1</th>
+                <th>from f2</th>
+                <th>from f3</th>
+                <th>from f4</th>
+                <th>from f5</th>
+            </tr>
+            <tr>
+                <th>f1</th>
+                <td class="param_c">{{ form_c.c0 }}</td>
+
+                <td>{{ form_a.a00 }}</td>
+                <td>{{ form_a.a01 }}</td>
+                <td>{{ form_a.a02 }}</td>
+                <td>{{ form_a.a03 }}</td>
+                <td>{{ form_a.a04 }}</td>
+            </tr>
+            <tr>
+                <th>f2</th>
+                <td class="param_c">{{ form_c.c1 }}</td>
+
+                <td>{{ form_a.a10 }}</td>
+                <td>{{ form_a.a11 }}</td>
+                <td>{{ form_a.a12 }}</td>
+                <td>{{ form_a.a13 }}</td>
+                <td>{{ form_a.a14 }}</td>
+            </tr>
+            <tr>
+                <th>f3</th>
+                <td class="param_c">{{ form_c.c2 }}</td>
+
+                <td>{{ form_a.a20 }}</td>
+                <td>{{ form_a.a21 }}</td>
+                <td>{{ form_a.a22 }}</td>
+                <td>{{ form_a.a23 }}</td>
+                <td>{{ form_a.a24 }}</td>
+            </tr>
+            <tr>
+                <th>f4</th>
+                <td class="param_c">{{ form_c.c3 }}</td>
+
+                <td>{{ form_a.a30 }}</td>
+                <td>{{ form_a.a31 }}</td>
+                <td>{{ form_a.a32 }}</td>
+                <td>{{ form_a.a33 }}</td>
+                <td>{{ form_a.a34 }}</td>
+            </tr>
+            <tr>
+                <th>f5</th>
+                <td class="param_c">{{ form_c.c4 }}</td>
+
+                <td>{{ form_a.a40 }}</td>
+                <td>{{ form_a.a41 }}</td>
+                <td>{{ form_a.a42 }}</td>
+                <td>{{ form_a.a43 }}</td>
+                <td>{{ form_a.a44 }}</td>
+            </tr>
         </table>
-        <input type="submit" value="Submit">
-      </form>
+        <div id="submit-visualise-container">
+        <input id="submit-visualise" type="submit" name="visualise" value="Visualise">
+            </div>
+    </form>
+</div>
+</section>
+
+{# Animations #}
+<section>
+<div id="animations">
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="{{ phase_animation }}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
     </div>
 
-    <div style="float: right">
-    <video width="800" autoplay loop muted>
-      <source src="{{cartesian_animation}}" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video>
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="{{ cartesian_animation }}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
     </div>
+</div>
+</section>
 
-
-
-  </body>
+</body>
 </html>

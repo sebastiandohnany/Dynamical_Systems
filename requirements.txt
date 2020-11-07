@@ -1,19 +1,5 @@
-asgiref==3.2.10
-certifi==2020.6.20
-cycler==0.10.0
-Django==3.1.1
-kiwisolver==1.2.0
-matplotlib @ file:///opt/concourse/worker/volumes/live/415740a8-e00a-411a-7129-aa05c3842a43/volume/matplotlib-base_1597876353062/work
-mkl-fft==1.1.0
-mkl-random==1.1.1
-mkl-service==2.3.0
-numpy @ file:///opt/concourse/worker/volumes/live/40d975a3-7e82-44c8-53df-feccdbce8b96/volume/numpy_and_numpy_base_1596233859108/work
-olefile==0.46
-Pillow @ file:///opt/concourse/worker/volumes/live/05b3bc99-cf9f-44f2-42cf-267ed3a55922/volume/pillow_1594307311725/work
-pyparsing==2.4.7
-python-dateutil==2.8.1
-pytz==2020.1
-scipy @ file:///opt/concourse/worker/volumes/live/9698578f-91da-4d5f-6fce-b26b1f42eb5a/volume/scipy_1597686637948/work
-six==1.15.0
-sqlparse==0.3.1
-tornado==6.0.4
+django
+matplotlib
+scipy
+numpy
+ffmpeg-python
