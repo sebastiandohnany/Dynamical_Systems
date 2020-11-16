@@ -88,7 +88,7 @@ def createAnimations():
     Creates animator object, sets parameters and calls to generate animations.
     """
     # delete previous animations
-    removeFiles()
+    # removeFiles()
     # prepare animator
     anim = animator.Animation()
     # a
