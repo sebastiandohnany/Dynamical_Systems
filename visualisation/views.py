@@ -12,7 +12,8 @@ from . import parser
 
 # CURRENT SYSTEM LOGIC
 
-system = models.System.objects.get_or_create(name="default_system")
+#system = models.System.objects.get_or_create(name="default_system")
+system = None
 
 
 
@@ -22,6 +23,10 @@ system = models.System.objects.get_or_create(name="default_system")
 
 def home(request):
     global system
+
+    if not system:
+        system = models.System.objects.get_or_create(name="default_system")
+        
     # if a POST to visualise
     if request.method == 'POST' and 'visualise' in request.POST:
 
