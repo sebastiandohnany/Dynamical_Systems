@@ -1,1 +1,1 @@
-web: gunicorn visualisation.wsgi --log-file -
+web: gunicorn dynamical_systems_web.wsgi --log-file -
