@@ -11,7 +11,9 @@ from . import parser
 
 
 # CURRENT SYSTEM LOGIC
-system = models.System.objects.get(name="default_system")
+
+system = models.System.objects.get_or_create(name="default_system")
+
 
 
 # ============================
