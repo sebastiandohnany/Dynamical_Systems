@@ -27,6 +27,7 @@ def home(request):
         system = models.System.objects.get_or_create(name="Dance")[0]
 
     if request.method == 'POST' and 'new_system' in request.POST:
+        print("new system")
         form_new_system = forms.NewSystem(request.POST)
         if form_new_system.is_valid():
             new_system, created = models.System.objects.get_or_create(name=form_new_system.cleaned_data['name'])
@@ -93,7 +94,8 @@ def home(request):
 
     # if a GET or POST with new SYSTEM
     else:
-        if request.method == 'POST' and 'system' in request.POST:
+        if request.method == 'POST' and 'change_system' in request.POST:
+            print("change system")
             form_system = forms.FormSystem(request.POST)
             if form_system.is_valid():
                 system = form_system.cleaned_data['system']

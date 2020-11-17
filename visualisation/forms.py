@@ -41,7 +41,7 @@ class FormIntegrationMaxStep(forms.ModelForm):
 
 
 class FormSystem(forms.Form):
-    system = forms.ModelChoiceField(queryset=System.objects.all(), initial=0)
+    system = forms.ModelChoiceField(queryset=System.objects.all())
 
 
 class NewSystem(forms.Form):
