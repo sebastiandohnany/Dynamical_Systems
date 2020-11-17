@@ -50,3 +50,36 @@ class ParamC(models.Model):
     c4 = models.FloatField(default=0)
 
     system = models.OneToOneField(System, on_delete=models.CASCADE)
+
+
+class InitialValues(models.Model):
+    x0 = models.FloatField(default=0)
+    x1 = models.FloatField(default=0)
+    x2 = models.FloatField(default=0)
+    x3 = models.FloatField(default=0)
+    x4 = models.FloatField(default=0)
+
+    system = models.OneToOneField(System, on_delete=models.CASCADE)
+
+
+class TimeSpan(models.Model):
+    start = models.FloatField(default=0)
+    end = models.FloatField(default=0)
+
+    system = models.OneToOneField(System, on_delete=models.CASCADE)
+
+
+class Visible(models.Model):
+    x0 = models.BooleanField(default=True)
+    x1 = models.BooleanField(default=True)
+    x2 = models.BooleanField(default=False)
+    x3 = models.BooleanField(default=False)
+    x4 = models.BooleanField(default=False)
+
+    system = models.OneToOneField(System, on_delete=models.CASCADE)
+
+
+class IntegrationMaxStep(models.Model):
+    step = models.FloatField(default=0.1)
+
+    system = models.OneToOneField(System, on_delete=models.CASCADE)

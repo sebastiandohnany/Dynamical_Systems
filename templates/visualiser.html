@@ -11,13 +11,22 @@
 
 <h1>Dynamical Systems</h1>
 <section>
+    <div id="systems">
     <div id="system">
     <form method="post">
         {% csrf_token %}
         {{ form_system }}
-        <input type="submit" value="Choose">
+        <input type="submit" name="system" value="Choose">
     </form>
     </div>
+    <div id="new_system">
+    <form method="post">
+        {% csrf_token %}
+        {{ form_new_system }}
+        <input type="submit" name="new_system" value="Add">
+    </form>
+    </div>
+        </div>
 </section>
 
 {# Forms #}
@@ -29,10 +38,13 @@
             <caption><h3>Parameters</h3></caption>
             <tr>
                 <th colspan="1"></th>
+                <th colspan="1">Initial Values</th>
                 <th colspan="1" class="param_c">Constant</th>
                 <th colspan="5">Linear</th>
+                <th>Visible</th>
             </tr>
             <tr>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th>from f1</th>
@@ -43,6 +55,7 @@
             </tr>
             <tr>
                 <th>f1</th>
+                <td class="initialvalues">{{ form_initialvalues.x0 }}</td>
                 <td class="param_c">{{ form_c.c0 }}</td>
 
                 <td>{{ form_a.a00 }}</td>
@@ -50,9 +63,12 @@
                 <td>{{ form_a.a02 }}</td>
                 <td>{{ form_a.a03 }}</td>
                 <td>{{ form_a.a04 }}</td>
+
+                <td>{{ form_visible.x0 }}</td>
             </tr>
             <tr>
                 <th>f2</th>
+                <td class="initialvalues">{{ form_initialvalues.x1 }}</td>
                 <td class="param_c">{{ form_c.c1 }}</td>
 
                 <td>{{ form_a.a10 }}</td>
@@ -60,9 +76,12 @@
                 <td>{{ form_a.a12 }}</td>
                 <td>{{ form_a.a13 }}</td>
                 <td>{{ form_a.a14 }}</td>
+
+                <td>{{ form_visible.x1 }}</td>
             </tr>
             <tr>
                 <th>f3</th>
+                <td class="initialvalues">{{ form_initialvalues.x2 }}</td>
                 <td class="param_c">{{ form_c.c2 }}</td>
 
                 <td>{{ form_a.a20 }}</td>
@@ -70,9 +89,14 @@
                 <td>{{ form_a.a22 }}</td>
                 <td>{{ form_a.a23 }}</td>
                 <td>{{ form_a.a24 }}</td>
+
+                <td>{{ form_visible.x2}}</td>
+                <th>Time Span</th>
+                <th>Step</th>
             </tr>
             <tr>
                 <th>f4</th>
+                <td class="initialvalues">{{ form_initialvalues.x3 }}</td>
                 <td class="param_c">{{ form_c.c3 }}</td>
 
                 <td>{{ form_a.a30 }}</td>
@@ -80,9 +104,14 @@
                 <td>{{ form_a.a32 }}</td>
                 <td>{{ form_a.a33 }}</td>
                 <td>{{ form_a.a34 }}</td>
+
+                <td>{{ form_visible.x3 }}</td>
+                <td>{{ form_timespan.start }}</td>
+                <td>{{ form_ims.step }}</td>
             </tr>
             <tr>
                 <th>f5</th>
+                <td class="initialvalues">{{ form_initialvalues.x4 }}</td>
                 <td class="param_c">{{ form_c.c4 }}</td>
 
                 <td>{{ form_a.a40 }}</td>
@@ -90,6 +119,9 @@
                 <td>{{ form_a.a42 }}</td>
                 <td>{{ form_a.a43 }}</td>
                 <td>{{ form_a.a44 }}</td>
+
+                <td>{{ form_visible.x4 }}</td>
+                <td>{{ form_timespan.end }}</td>
             </tr>
         </table>
         <div id="submit-visualise-container">
@@ -103,6 +135,7 @@
 <section>
 <div id="animations">
     <div class="video-container">
+        <h3>Phase</h3>
         <video autoplay loop muted>
             <source src="{{ phase_animation }}" type="video/mp4">
             Your browser does not support HTML5 video.
@@ -110,6 +143,7 @@
     </div>
 
     <div class="video-container">
+        <h3>Cartesian</h3>
         <video autoplay loop muted>
             <source src="{{ cartesian_animation }}" type="video/mp4">
             Your browser does not support HTML5 video.
