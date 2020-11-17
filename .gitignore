@@ -56,8 +56,10 @@ pip-delete-this-directory.txt
 
 
 # Mine
+# ignore files in folder foo
 animations/*
-!animations/.gitkeep
+# but keep the folder
+!animations/.keep
 
 
 
