@@ -27,7 +27,6 @@ def home(request):
         system = models.System.objects.get_or_create(name="Dance")[0]
 
     if request.method == 'POST' and 'new_system' in request.POST:
-        print("new system")
         form_new_system = forms.NewSystem(request.POST)
         if form_new_system.is_valid():
             new_system, created = models.System.objects.get_or_create(name=form_new_system.cleaned_data['name'])
@@ -95,7 +94,6 @@ def home(request):
     # if a GET or POST with new SYSTEM
     else:
         if request.method == 'POST' and 'change_system' in request.POST:
-            print("change system")
             form_system = forms.FormSystem(request.POST)
             if form_system.is_valid():
                 system = form_system.cleaned_data['system']
@@ -110,7 +108,13 @@ def home(request):
         form_ims = forms.FormIntegrationMaxStep(instance=system.integrationmaxstep, prefix="form_integrationmaxstep")
 
         # create animations
-        filenames = createAnimations()
+        try:
+            filenames = findFiles(system.name)
+            assert(len(filenames) == 2)
+            assert(filenames[0] != None)
+            assert (filenames[1] != None)
+        except:
+            filenames = createAnimations()
         cartesian_animation = settings.MEDIA_URL + filenames[0]
         phase_animation = settings.MEDIA_URL + filenames[1]
 
@@ -136,7 +140,7 @@ def createAnimations():
     Creates animator object, sets parameters and calls to generate animations.
     """
     # delete previous animations
-    removeFiles()
+    removeFiles(system.name)
     # prepare animator
     anim = animator.Animation()
     # a
@@ -159,7 +163,7 @@ def createAnimations():
     anim.set_ims(ims)
 
     # create
-    filenames = anim.createAnimations()
+    filenames = anim.createAnimations(system.name)
 
     return filenames
 
@@ -167,27 +171,28 @@ def createAnimations():
 # ============================
 # FILE HANDLING
 # ============================
-def findNewestFiles():
+def findFiles(name):
     files = sorted(os.listdir(settings.MEDIA_ROOT))
     cartesian_files = [None]
     phase_files = [None]
     for file in files:
-        if "cartesianAnimation" in file:
+        if f"{name}_cartesianAnimation" in file:
             cartesian_files.append(file)
-        elif "phaseAnimation" in file:
+        elif f"{name}_phaseAnimation" in file:
             phase_files.append(file)
 
     return cartesian_files[-1], phase_files[-1]
 
 
-def removeFiles():
+def removeFiles(name):
     folder = settings.MEDIA_ROOT
     for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print('Failed to delete %s. Reason: %s' % (file_path, e))
+        if name in filename:
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))

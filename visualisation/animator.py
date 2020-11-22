@@ -125,7 +125,7 @@ class Animation:
     def set_ims(self, ims):
         self.integration_max_step = ims
 
-    def createAnimations(self, cartesian=True, phase=True):
+    def createAnimations(self, name, cartesian=True, phase=True):
         # integrate
         self.integrate()
 
@@ -138,7 +138,7 @@ class Animation:
         if cartesian:
             cartesian_animation = self.animateCartesian()
 
-            cartesian_filename = f"cartesianAnimation_{timestamp}.mp4"
+            cartesian_filename = f"{name}_cartesianAnimation_{timestamp}.mp4"
             cartesian_fullname = f"{settings.MEDIA_ROOT}/{cartesian_filename}"
 
             cartesian_animation.save(cartesian_fullname, writer=writer)
@@ -149,7 +149,7 @@ class Animation:
         if phase:
             phase_animation = self.animatePhase()
 
-            phase_filename = f"phaseAnimation_{timestamp}.mp4"
+            phase_filename = f"{name}_phaseAnimation_{timestamp}.mp4"
             phase_fullname = f"{settings.MEDIA_ROOT}/{phase_filename}"
 
             phase_animation.save(phase_fullname, writer=writer)
