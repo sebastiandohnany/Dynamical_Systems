@@ -40,9 +40,9 @@ class Animation:
     result = []
 
     # STYLES
-    line_kwargs = {"linewidth": 1.0, "animated": True,}
+    line_kwargs = {"linewidth": 1.5, "animated": True}
     axes_kwargs = {}
-    tick_kwargs = {"length": 1.5, "width": 1.5, "labelsize": 8}
+    tick_kwargs = {"length": 2.5, "width": 1.5, "labelsize": 8}
     ticklabel_kwargs = {"scilimits": (-3, 4)}
     animation_kwargs = {"interval": 60, "blit": True, }
 
@@ -99,7 +99,7 @@ class Animation:
         ims = []
         for t in range(len(self.result.t)):
             im = ax.plot(self.result.y[self.visible[0]][0:t], self.result.y[self.visible[1]][0:t],
-                         c='#00A9A5', **self.line_kwargs)
+                         c='#5C374C', **self.line_kwargs)
             ims.append(im)
 
         phase_ani = animation.ArtistAnimation(fig, ims, **self.animation_kwargs)

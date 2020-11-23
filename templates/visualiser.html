@@ -9,9 +9,16 @@
 </head>
 <body>
 
-<h1>Dynamical Systems</h1>
+<h1 id="heading">Dynamical Systems</h1>
+<div id="new_system">
+    <form method="post">
+        {% csrf_token %}
+        {{ form_new_system }}
+        <input type="submit" name="new_system" value="Add">
+    </form>
+    </div>
 <section>
-    <div id="systems">
+
     <div id="system">
     <form method="post">
         {% csrf_token %}
@@ -19,14 +26,7 @@
         <input type="submit" name="change_system" value="Choose">
     </form>
     </div>
-    <div id="new_system">
-    <form method="post">
-        {% csrf_token %}
-        {{ form_new_system }}
-        <input type="submit" name="new_system" value="Add">
-    </form>
-    </div>
-        </div>
+
 </section>
 
 {# Forms #}
@@ -34,6 +34,11 @@
 <div id="data">
     <form method="post">
         {% csrf_token %}
+        <h3>Description</h3>
+        <div id="description">
+        {{ form_description.text }}
+        </div>
+        <div>
         <table id="parameters">
             <caption><h3>Parameters</h3></caption>
             <tr>
@@ -124,9 +129,10 @@
                 <td>{{ form_timespan.end }}</td>
             </tr>
         </table>
-        <div id="submit-visualise-container">
-        <input id="submit-visualise" type="submit" name="visualise" value="Visualise">
             </div>
+        <div id="submit-visualise-container">
+            <input id="submit-visualise" type="submit" name="visualise" value="Visualise">
+        </div>
     </form>
 </div>
 </section>
@@ -151,6 +157,12 @@
     </div>
 </div>
 </section>
+{#<section>#}
+{#    <div style="height: 200px; margin-top: 20px">#}
+{#        <p>Created by Sebastián Dohnány -> dohnany.sebastian@gmail.com</p>#}
+{#        <p>Supervised by doc. Martin Takáč, Centre for Cognitive Science, Comenius University</p>#}
+{#    </div>#}
+{#</section>#}
 
 </body>
 </html>

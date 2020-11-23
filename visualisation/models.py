@@ -83,3 +83,9 @@ class IntegrationMaxStep(models.Model):
     step = models.FloatField(default=0.1)
 
     system = models.OneToOneField(System, on_delete=models.CASCADE)
+
+
+class Description(models.Model):
+    text = models.TextField()
+
+    system = models.OneToOneField(System, on_delete=models.CASCADE)

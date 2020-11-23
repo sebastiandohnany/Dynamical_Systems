@@ -48,3 +48,11 @@ class NewSystem(forms.Form):
     name = forms.CharField(initial='New System')
 
 
+class FormDescription(forms.ModelForm):
+    class Meta:
+        model = models.Description
+        exclude = ['system']
+
+
+
+

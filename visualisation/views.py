@@ -10,51 +10,55 @@ import shutil
 from . import parser
 
 
-# CURRENT SYSTEM LOGIC
+# ============================
+# CURRENT SYSTEM
+# ============================
 
 system = None
 
+
+# ============================
+# HELPER
+# ============================
+
+def copyParameter(obj, new_system):
+    obj.pk = None
+    obj.system = new_system
+    obj.save()
 
 
 # ============================
 # VIEW
 # ============================
-
 def home(request):
     global system
 
     if not system:
         system = models.System.objects.get_or_create(name="Dance")[0]
 
+    # ============================
+    # NEW SYSTEM
+    # ============================
     if request.method == 'POST' and 'new_system' in request.POST:
         form_new_system = forms.NewSystem(request.POST)
         if form_new_system.is_valid():
             new_system, created = models.System.objects.get_or_create(name=form_new_system.cleaned_data['name'])
             if created:
-                system.parama.pk = None
-                system.parama.system = new_system
-                system.parama.save()
-                system.paramc.pk = None
-                system.paramc.system = new_system
-                system.paramc.save()
-                system.initialvalues.pk = None
-                system.initialvalues.system = new_system
-                system.initialvalues.save()
-                system.timespan.pk = None
-                system.timespan.system = new_system
-                system.timespan.save()
-                system.visible.pk = None
-                system.visible.system = new_system
-                system.visible.save()
-                system.integrationmaxstep.pk = None
-                system.integrationmaxstep.system = new_system
-                system.integrationmaxstep.save()
+                copyParameter(system.parama, new_system)
+                copyParameter(system.paramc, new_system)
+                copyParameter(system.initialvalues, new_system)
+                copyParameter(system.timespan, new_system)
+                copyParameter(system.visible, new_system)
+                copyParameter(system.integrationmaxstep, new_system)
+                copyParameter(system.description, new_system)
 
                 system = new_system
 
     form_new_system = forms.NewSystem()
 
-    # if a POST to visualise
+    # ============================
+    # POST: VISUALISE
+    # ============================
     if request.method == 'POST' and 'visualise' in request.POST:
 
         # create form instances and populate them with data from the request
@@ -65,9 +69,10 @@ def home(request):
         form_timespan = forms.FormTimeSpan(request.POST, instance=system.timespan, prefix="form_timespan")
         form_visible = forms.FormVisible(request.POST, instance=system.visible, prefix="form_visible")
         form_ims = forms.FormIntegrationMaxStep(request.POST, instance=system.integrationmaxstep, prefix="form_integrationmaxstep")
+        form_description = forms.FormDescription(request.POST, instance=system.description, prefix="form_description")
 
         # check whether the forms are valid and process the data
-        if form_a.is_valid() and form_c.is_valid() and form_initialvalues.is_valid() and form_timespan.is_valid() and form_visible.is_valid() and form_ims.is_valid():
+        if form_a.is_valid() and form_c.is_valid() and form_initialvalues.is_valid() and form_timespan.is_valid() and form_visible.is_valid() and form_ims.is_valid() and form_description.is_valid():
 
             # save the forms
             form_a.save()
@@ -76,6 +81,7 @@ def home(request):
             form_timespan.save()
             form_visible.save()
             form_ims.save()
+            form_description.save()
 
             # create animations
             filenames = createAnimations()
@@ -88,11 +94,16 @@ def home(request):
                                                        'form_timespan': form_timespan,
                                                        'form_visible': form_visible,
                                                        'form_ims': form_ims,
+                                                       'form_description': form_description,
                                                        'cartesian_animation': cartesian_animation,
                                                        'phase_animation': phase_animation})
 
-    # if a GET or POST with new SYSTEM
+    # ============================
+    # GET: ANIMATIONS
+    # ============================
     else:
+
+        # change system
         if request.method == 'POST' and 'change_system' in request.POST:
             form_system = forms.FormSystem(request.POST)
             if form_system.is_valid():
@@ -106,21 +117,19 @@ def home(request):
         form_timespan = forms.FormTimeSpan(instance=system.timespan, prefix="form_timespan")
         form_visible = forms.FormVisible(instance=system.visible, prefix="form_visible")
         form_ims = forms.FormIntegrationMaxStep(instance=system.integrationmaxstep, prefix="form_integrationmaxstep")
+        form_description = forms.FormDescription(instance=system.description, prefix="form_description")
 
-        # create animations
+        # fetch animations or create
         try:
             filenames = findFiles(system.name)
-            assert(len(filenames) == 2)
             assert(filenames[0] != None)
-            assert (filenames[1] != None)
+            assert(filenames[1] != None)
         except:
             filenames = createAnimations()
+
         cartesian_animation = settings.MEDIA_URL + filenames[0]
         phase_animation = settings.MEDIA_URL + filenames[1]
 
-        # #TESTING
-        # cartesian_animation = settings.MEDIA_URL + findNewestFiles()[0]
-        # phase_animation = settings.MEDIA_URL + findNewestFiles()[1]
 
     return render(request, 'visualiser.html', {'form_a': form_a, 'form_c': form_c, 'form_system': form_system,
                                                'form_new_system': form_new_system,
@@ -128,6 +137,7 @@ def home(request):
                                                'form_timespan': form_timespan,
                                                'form_visible': form_visible,
                                                'form_ims': form_ims,
+                                               'form_description': form_description,
                                                'cartesian_animation': cartesian_animation,
                                                'phase_animation': phase_animation})
 

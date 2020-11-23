@@ -1,49 +1,55 @@
 /* GENERICS */
 
 body {
-    padding:10px;
+    padding:15px;
 }
 
 
 section {
     margin-top: 40px;
     margin-bottom: 40px;
+    display:block;
 }
 
 
 /* SYSTEM */
-#systems {
-    margin-left: auto;
-    margin-right: auto;
-    width: 250px;
+#heading {
+    display: inline-block;
 }
 
-#system, #new_system {
-    width: 120px;
-}
 
 #system {
-    float: left;
-    margin-right: 10px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
 }
 
 #new_system {
     float: right;
+    width: 120px;
+    margin-right: 20px;
 }
 
-#system *{
+#system *, #new_system *{
     margin: 5px;
     width: inherit;
 }
 
-#new_system *{
-    margin: 5px;
-    width: inherit;
+#system select, #system label {
+    width:300px;
+    font-size:24px;
 }
 
 /* DATA */
-#data {
 
+#description {
+
+}
+
+#data {
+    padding: 20px;
 }
 
 #data caption, th{
@@ -59,7 +65,7 @@ section {
 }
 
 #submit-visualise-container {
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -68,6 +74,7 @@ section {
 
 #submit-visualise {
     background-color: rgb(152, 136, 165);
+    font-size: 24px;
 }
 
 
