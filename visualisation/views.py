@@ -10,12 +10,6 @@ import shutil
 from . import parser
 
 
-# ============================
-# CURRENT SYSTEM
-# ============================
-
-system = None
-
 
 # ============================
 # HELPER
@@ -31,10 +25,11 @@ def copyParameter(obj, new_system):
 # VIEW
 # ============================
 def home(request):
-    global system
 
-    if not system:
-        system = models.System.objects.get_or_create(name="Dance")[0]
+    if 'system' in request.session:
+        system = models.System.objects.get(name=request.session['system'])
+    else:
+        system = models.System.objects.all()[0]
 
     # ============================
     # NEW SYSTEM
@@ -53,6 +48,7 @@ def home(request):
                 copyParameter(system.description, new_system)
 
                 system = new_system
+                request.session['system'] = new_system.name
 
     form_new_system = forms.NewSystem()
 
@@ -84,7 +80,7 @@ def home(request):
             form_description.save()
 
             # create animations
-            filenames = createAnimations()
+            filenames = createAnimations(system)
             cartesian_animation = settings.MEDIA_URL + filenames[0]
             phase_animation = settings.MEDIA_URL + filenames[1]
 
@@ -108,6 +104,7 @@ def home(request):
             form_system = forms.FormSystem(request.POST)
             if form_system.is_valid():
                 system = form_system.cleaned_data['system']
+                request.session['system'] = system.name
 
         # prepare forms from db
         form_system = forms.FormSystem(initial={'system': system})
@@ -125,7 +122,7 @@ def home(request):
             assert(filenames[0] != None)
             assert(filenames[1] != None)
         except:
-            filenames = createAnimations()
+            filenames = createAnimations(system)
 
         cartesian_animation = settings.MEDIA_URL + filenames[0]
         phase_animation = settings.MEDIA_URL + filenames[1]
@@ -145,7 +142,7 @@ def home(request):
 # ============================
 # ANIMATION
 # ============================
-def createAnimations():
+def createAnimations(system):
     """
     Creates animator object, sets parameters and calls to generate animations.
     """
