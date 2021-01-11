@@ -1,6 +1,6 @@
 from django import forms
-from . import models
-from .models import System
+from visualisation import models
+from visualisation.models import System
 
 
 class FormA(forms.ModelForm):

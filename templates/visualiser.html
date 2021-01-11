@@ -1,168 +1,145 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Dynamical Systems</title>
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1 id="heading">Dynamical Systems</h1>
-<div id="new_system">
-    <form method="post">
-        {% csrf_token %}
-        {{ form_new_system }}
-        <input type="submit" name="new_system" value="Add">
-    </form>
+{% block systems %}
+    <div id="new_system">
+        <form method="post">
+            {% csrf_token %}
+            {{ form_new_system }}
+            <input type="submit" name="new_system" value="Add">
+        </form>
     </div>
-<section>
-
     <div id="system">
-    <form method="post">
-        {% csrf_token %}
-        {{ form_system }}
-        <input type="submit" name="change_system" value="Choose">
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            {{ form_system }}
+            <input type="submit" name="change_system" value="Choose">
+        </form>
     </div>
+{% endblock %}
 
-</section>
-
-{# Forms #}
-<section>
-<div id="data">
-    <form method="post">
-        {% csrf_token %}
-        <h3>Description</h3>
-        <div id="description">
-        {{ form_description.text }}
+{% block animations %}
+    <div id="animations">
+        <div class="video-container">
+            <h3>Phase View</h3>
+            <video autoplay loop muted>
+                <source src="{{ phase_animation }}" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
         </div>
-        <div>
-        <table id="parameters">
-            <caption><h3>Parameters</h3></caption>
-            <tr>
-                <th colspan="1"></th>
-                <th colspan="1">Initial Values</th>
-                <th colspan="1" class="param_c">Constant</th>
-                <th colspan="5">Linear</th>
-                <th>Visible (max 2)</th>
-            </tr>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>from f1</th>
-                <th>from f2</th>
-                <th>from f3</th>
-                <th>from f4</th>
-                <th>from f5</th>
-            </tr>
-            <tr>
-                <th>f1</th>
-                <td class="initialvalues">{{ form_initialvalues.x0 }}</td>
-                <td class="param_c">{{ form_c.c0 }}</td>
 
-                <td>{{ form_a.a00 }}</td>
-                <td>{{ form_a.a01 }}</td>
-                <td>{{ form_a.a02 }}</td>
-                <td>{{ form_a.a03 }}</td>
-                <td>{{ form_a.a04 }}</td>
+        <div class="video-container">
+            <h3>Cartesian View</h3>
+            <video autoplay loop muted>
+                <source src="{{ cartesian_animation }}" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+    </div>
+{% endblock %}
 
-                <td>{{ form_visible.x0 }}</td>
-            </tr>
-            <tr>
-                <th>f2</th>
-                <td class="initialvalues">{{ form_initialvalues.x1 }}</td>
-                <td class="param_c">{{ form_c.c1 }}</td>
-
-                <td>{{ form_a.a10 }}</td>
-                <td>{{ form_a.a11 }}</td>
-                <td>{{ form_a.a12 }}</td>
-                <td>{{ form_a.a13 }}</td>
-                <td>{{ form_a.a14 }}</td>
-
-                <td>{{ form_visible.x1 }}</td>
-            </tr>
-            <tr>
-                <th>f3</th>
-                <td class="initialvalues">{{ form_initialvalues.x2 }}</td>
-                <td class="param_c">{{ form_c.c2 }}</td>
-
-                <td>{{ form_a.a20 }}</td>
-                <td>{{ form_a.a21 }}</td>
-                <td>{{ form_a.a22 }}</td>
-                <td>{{ form_a.a23 }}</td>
-                <td>{{ form_a.a24 }}</td>
-
-                <td>{{ form_visible.x2}}</td>
-                <th>Time Span</th>
-                <th>Step</th>
-            </tr>
-            <tr>
-                <th>f4</th>
-                <td class="initialvalues">{{ form_initialvalues.x3 }}</td>
-                <td class="param_c">{{ form_c.c3 }}</td>
-
-                <td>{{ form_a.a30 }}</td>
-                <td>{{ form_a.a31 }}</td>
-                <td>{{ form_a.a32 }}</td>
-                <td>{{ form_a.a33 }}</td>
-                <td>{{ form_a.a34 }}</td>
-
-                <td>{{ form_visible.x3 }}</td>
-                <td>{{ form_timespan.start }}</td>
-                <td>{{ form_ims.step }}</td>
-            </tr>
-            <tr>
-                <th>f5</th>
-                <td class="initialvalues">{{ form_initialvalues.x4 }}</td>
-                <td class="param_c">{{ form_c.c4 }}</td>
-
-                <td>{{ form_a.a40 }}</td>
-                <td>{{ form_a.a41 }}</td>
-                <td>{{ form_a.a42 }}</td>
-                <td>{{ form_a.a43 }}</td>
-                <td>{{ form_a.a44 }}</td>
-
-                <td>{{ form_visible.x4 }}</td>
-                <td>{{ form_timespan.end }}</td>
-            </tr>
-        </table>
+{% block data %}
+    <div id="data">
+        <form method="post">
+            {% csrf_token %}
+            <h3>Description</h3>
+            <div id="description">
+                {{ form_description.text }}
             </div>
-        <div id="submit-visualise-container">
-            <input id="submit-visualise" type="submit" name="visualise" value="Visualise">
-        </div>
-    </form>
-</div>
-</section>
+            <div>
+                <table id="parameters">
+                    <caption><h3>Parameters</h3></caption>
+                    <tr>
+                        <th colspan="1"></th>
+                        <th colspan="1">Initial Values</th>
+                        <th colspan="1" class="param_c">Constant</th>
+                        <th colspan="5">Linear</th>
+                        <th>Visible (max 2)</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>from f<sub>1</sub></th>
+                        <th>from f<sub>2</sub></th>
+                        <th>from f<sub>3</sub></th>
+                        <th>from f<sub>4</sub></th>
+                        <th>from f<sub>5</sub></th>
+                    </tr>
+                    <tr>
+                        <th>f<sub>1</sub></th>
+                        <td class="initialvalues">{{ form_initialvalues.x0 }}</td>
+                        <td class="param_c">{{ form_c.c0 }}</td>
 
-{# Animations #}
-<section>
-<div id="animations">
-    <div class="video-container">
-        <h3>Phase View</h3>
-        <video autoplay loop muted>
-            <source src="{{ phase_animation }}" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
+                        <td>{{ form_a.a00 }}</td>
+                        <td>{{ form_a.a01 }}</td>
+                        <td>{{ form_a.a02 }}</td>
+                        <td>{{ form_a.a03 }}</td>
+                        <td>{{ form_a.a04 }}</td>
+
+                        <td>{{ form_visible.x0 }}</td>
+                    </tr>
+                    <tr>
+                        <th>f<sub>2</sub></th>
+                        <td class="initialvalues">{{ form_initialvalues.x1 }}</td>
+                        <td class="param_c">{{ form_c.c1 }}</td>
+
+                        <td>{{ form_a.a10 }}</td>
+                        <td>{{ form_a.a11 }}</td>
+                        <td>{{ form_a.a12 }}</td>
+                        <td>{{ form_a.a13 }}</td>
+                        <td>{{ form_a.a14 }}</td>
+
+                        <td>{{ form_visible.x1 }}</td>
+                    </tr>
+                    <tr>
+                        <th>f<sub>3</sub></th>
+                        <td class="initialvalues">{{ form_initialvalues.x2 }}</td>
+                        <td class="param_c">{{ form_c.c2 }}</td>
+
+                        <td>{{ form_a.a20 }}</td>
+                        <td>{{ form_a.a21 }}</td>
+                        <td>{{ form_a.a22 }}</td>
+                        <td>{{ form_a.a23 }}</td>
+                        <td>{{ form_a.a24 }}</td>
+
+                        <td>{{ form_visible.x2}}</td>
+                        <th>Time Span</th>
+                        <th>Step</th>
+                    </tr>
+                    <tr>
+                        <th>f<sub>4</sub></th>
+                        <td class="initialvalues">{{ form_initialvalues.x3 }}</td>
+                        <td class="param_c">{{ form_c.c3 }}</td>
+
+                        <td>{{ form_a.a30 }}</td>
+                        <td>{{ form_a.a31 }}</td>
+                        <td>{{ form_a.a32 }}</td>
+                        <td>{{ form_a.a33 }}</td>
+                        <td>{{ form_a.a34 }}</td>
+
+                        <td>{{ form_visible.x3 }}</td>
+                        <td class="meta-field">{{ form_timespan.start }}</td>
+                        <td class="meta-field">{{ form_ims.step }}</td>
+                    </tr>
+                    <tr>
+                        <th>f<sub>5</sub></th>
+                        <td class="initialvalues">{{ form_initialvalues.x4 }}</td>
+                        <td class="param_c">{{ form_c.c4 }}</td>
+
+                        <td>{{ form_a.a40 }}</td>
+                        <td>{{ form_a.a41 }}</td>
+                        <td>{{ form_a.a42 }}</td>
+                        <td>{{ form_a.a43 }}</td>
+                        <td>{{ form_a.a44 }}</td>
+
+                        <td>{{ form_visible.x4 }}</td>
+                        <td class="meta-field">{{ form_timespan.end }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="submit-visualise-container">
+                <input id="submit-visualise" type="submit" name="visualise" value="Save & Visualise &uarr;">
+            </div>
+        </form>
     </div>
-
-    <div class="video-container">
-        <h3>Cartesian View</h3>
-        <video autoplay loop muted>
-            <source src="{{ cartesian_animation }}" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
-    </div>
-</div>
-</section>
-{#<section>#}
-{#    <div style="height: 200px; margin-top: 20px">#}
-{#        <p>Created by Sebastián Dohnány -> dohnany.sebastian@gmail.com</p>#}
-{#        <p>Supervised by doc. Martin Takáč, Centre for Cognitive Science, Comenius University</p>#}
-{#    </div>#}
-{#</section>#}
-
-</body>
-</html>
+{% endblock %}

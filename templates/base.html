@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dynamical Systems</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Slab:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<h1 id="heading">Dynamical Systems</h1>
+
+<!-- Trigger/Open The Modal -->
+<button id="infoModalBtn">?</button>
+
+<!-- The Modal -->
+<div id="infoModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <figure>
+            <blockquote>
+                <p>The times they are a-changin'.</p>
+            </blockquote>
+            <figcaption> — <cite>Bob Dylan</cite></figcaption>
+        </figure>
+        <br>
+        <h2>Dynamical Systems</h2>
+
+        <p>So much in this world unfolds over time. And whenever it does, it can be described by a dynamical system – that is
+    one of the most fundamental insights of science. All that is needed is to describe a state of the things studied in numbers and then find
+    rules for how the state will change in the next instant of time. For example, the spheres Galileo threw from the Leaning Tower of Pisa could be described by their height and velocity. The rule says both spheres will accelerate according to the gravitational constant which is the same for every object on Earth. That is why they both touched the ground at the same time. The beauty lies in the fact, that if one can do this for one system, the same pattern of behaviour can be found occurring again and again in nature.</p>
+
+
+
+        <h2>Usage Guide</h2>
+
+        <h3>Choosing System</h3>
+
+        <p>Feel free to choose any of the systems from the dropdown menu. You will see how the system evolves in time,
+            you can read its description and ponder the parameters that define its dance.</p>
+
+        <h3>Phase & Cartesian Views</h3>
+
+        <p>Each system is represented in two ways. <i>Phase view</i> shows, as time progresses, the relative position of
+            the first chosen function versus another one. If the phase line is closing on to a single spot, it means the
+            system is reaching an equilibrium, while in the opposite case the system is getting more and more unstable.
+            <i>Cartesian view</i> shows the same two functions side by side as they both individually progress through time.
+            It is worth noting, that both of the animations are a normal MP4 video: right-click them and choose
+            <code>Show Controls</code>: now it is possible to pause, slow down or download them.</p>
+
+        <h3>Creating new systems</h3>
+
+        <p>Once you are ready, you can choose any of the existing systems, type a new name into the corresponding field and click <code>Add</code>.
+            This will create a copy of the original system where you can play around with the parameters
+            and see how the behaviour of the system changes. Do not forget to click <code>Save & Visualise</code> to see the changes and save them.
+            For experimentation, it is a good idea to choose a greater step size (eg. 0.6) to make the rendering
+            process quicker. Once you are happy with the system, you can change the time step back to ~ 0.2. Your system
+            will be visible to all users of the site so make it neat, but do not worry if you struggle at first or at second!</p>
+
+    </div>
+
+</div>
+
+{# Choose/Add System #}
+<section>
+    {% block systems %}System selection failed to load.{% endblock %}
+</section>
+
+{# Animations #}
+<section>
+    {% block animations %}Animations failed to load.{% endblock %}
+</section>
+
+
+{# Data #}
+<section>
+    {% block data %}Data tables failed to load.{% endblock %}
+</section>
+
+
+{# Footer #}
+<hr>
+<footer>
+    <p>Developed by doc. Martin Takáč and Sebastian Dohnány @ <a href="http://cogsci.fmph.uniba.sk/">Centre for Cognitive Science</a>, Comenius University, Bratislava, Slovakia</p>
+    <p>Source code can be found on <a href="https://github.com/sebastiandohnany/Dynamical_Systems">GitHub</a>. In case of any other queries, please contact sebastian.dohnany at kcl.ac.uk.</p>
+    <p>2021</p>
+</footer>
+
+</body>
+
+<script type="text/javascript" src="{% static 'javascript/app.js' %}"></script>
+
+</html>

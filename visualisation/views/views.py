@@ -1,14 +1,11 @@
 from django.shortcuts import render
 
 from django.conf import settings
-from . import animator
-from . import forms
-from . import models
+from visualisation.logic import animator, parser
+from visualisation.models import forms
+from visualisation import models
 import os
 import shutil
-
-from . import parser
-
 
 
 # ============================
